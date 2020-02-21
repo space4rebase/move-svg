@@ -1,0 +1,8 @@
+.Canvas_wrapper {
+  background: #ededed;
+  min-height: 100%;
+  flex: 1 1 auto;
+  text-align: center;
+  display: flex;
+}
+
