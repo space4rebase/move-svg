@@ -6,3 +6,7 @@
   display: flex;
 }
 
+.Canvas_Active-image {
+  cursor: pointer;
+}
+
