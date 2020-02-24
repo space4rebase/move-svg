@@ -14,10 +14,13 @@ export class Canvas extends React.Component {
   }
 
   mouseDownHandler(e) {
+     const startX = e.touches ? e.touches[0].pageX : e.pageX;
+     const startY = e.touches ? e.touches[0].pageY : e.pageY;
+
     this.setState({
       isMoving: true,
-      startX: e.pageX,
-      startY: e.pageY,
+      startX,
+      startY,
       x: this.state.x - this.state.dx,
       y: this.state.y - this.state.dy,
       dx: 0,
@@ -25,10 +28,10 @@ export class Canvas extends React.Component {
     });
   }
 
-  mouseMoveHandler (e) {
+  mouseMoveHandler(e) {
     if (this.state.isMoving) {
-      const x = e.pageX;
-      const y = e.pageY;      
+      const x = e.touches ? e.touches[0].pageX : e.pageX;
+      const y = e.touches ? e.touches[0].pageY : e.pageY;  
       const dx = this.state.startX - x;
       const dy = this.state.startY - y;
 
@@ -78,8 +81,11 @@ export class Canvas extends React.Component {
             strokeWidth="4"
             fill="transparent"
             onMouseDown={this.mouseDownHandler.bind(this)}
+            onTouchStart={this.mouseDownHandler.bind(this)}
             onMouseMove={this.mouseMoveHandler.bind(this)}
+            onTouchMove={this.mouseMoveHandler.bind(this)}
             onMouseUp={this.mouseUpHandler.bind(this)}
+            onTouchEnd={this.mouseUpHandler.bind(this)}
             style={this.state.isMoving ? {
               "cursor": "grabbing"
             } : {
