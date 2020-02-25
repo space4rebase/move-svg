@@ -5,22 +5,19 @@ export class Canvas extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
+      isMoving: false,
       x: 0,
       y: 0,
-      isMoving: false,
       dx: 0,
       dy: 0,
     }
   }
 
   mouseDownHandler(e) {
-     const startX = e.touches ? e.touches[0].pageX : e.pageX;
-     const startY = e.touches ? e.touches[0].pageY : e.pageY;
-
     this.setState({
       isMoving: true,
-      startX,
-      startY,
+      startX: e.touches ? e.touches[0].pageX : e.pageX,
+      startY: e.touches ? e.touches[0].pageY : e.pageY,
       x: this.state.x - this.state.dx,
       y: this.state.y - this.state.dy,
       dx: 0,
@@ -62,24 +59,6 @@ export class Canvas extends React.Component {
             stroke="green"
             strokeWidth="4"
             fill="yellow"
-            />
-          <image 
-            href="https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png" 
-            height="300" 
-            width="300" 
-            x={this.state.x - this.state.dx} 
-            y={this.state.y - this.state.dy} 
-            onClick={() => console.log("Image clicked!") }
-            clipPath="url(#myClip)"
-            className="Canvas_Active-image"
-          />
-          <circle 
-            cx="200"
-            cy="200"
-            r="150"
-            stroke="green"
-            strokeWidth="4"
-            fill="transparent"
             onMouseDown={this.mouseDownHandler.bind(this)}
             onTouchStart={this.mouseDownHandler.bind(this)}
             onMouseMove={this.mouseMoveHandler.bind(this)}
@@ -92,12 +71,19 @@ export class Canvas extends React.Component {
               "cursor": "grab"
             }
             }
-
             />
+          <image 
+            href="https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png" 
+            height="300" 
+            width="300" 
+            x={this.state.x - this.state.dx} 
+            y={this.state.y - this.state.dy} 
+            clipPath="url(#myClip)"
+            className="Canvas_Active-image"
+            pointerEvents="none"
+          />
         </svg>
       </div>
     );
-
-    
   }
 }
